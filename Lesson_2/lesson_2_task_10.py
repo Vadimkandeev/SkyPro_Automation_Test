@@ -1,22 +1,8 @@
-"""
-sum = 0
-
+sum = int(input())
+years = int(input())
 def bank(x, y):
-    sum = int(x)
-    for i in range(int(y)+1):
-        sum = sum + sum/10
-
-a = input(int())
-b = input(int())
-bank(a, b)
-print(sum)
-"""
-sum = 0
-a = input()
-b = input()
-def func(x, y):
-    sum = x + y
-    return sum
-print(sum)
-
-func(a, b)   
+    for i in range(y):
+        x = x + x/10
+    #print(x)
+    print(round(x, 2)) # Лучше использовать функцию округления результата до двух знаков 
+bank(sum, years)       # после запятой
