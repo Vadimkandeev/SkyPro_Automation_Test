@@ -4,15 +4,15 @@ def cycle(x): # Добавлена функция цикла, которая в�
 
 
 def fizz_buz(num):
-    if (int(num) % 3 == 0) and (int(num) % 5 == 0):
-        cycle(int(num))
+    if (num % 3 == 0) and (num % 5 == 0):
+        cycle(num) # <<--
         print("FizzBuzz")
-    elif int(num) % 3 == 0:
-        cycle(int(num))
+    elif num % 3 == 0:
+        cycle(num) # <<--
         print("Fizz")
-    elif int(num) % 5 == 0:
-        cycle(int(num))
+    elif num % 5 == 0:
+        cycle(num) # <<--
         print("Buzz")
 
 
-fizz_buz(input())
+fizz_buz(int(input()))
