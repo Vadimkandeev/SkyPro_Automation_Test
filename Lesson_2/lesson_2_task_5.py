@@ -1,5 +1,5 @@
 def month_to_season(month):
-    if (1 <= month <= 3) or month == 12: # Исправлено условие
+    if (1 <= month <= 3) or month == 12: # Внесено исправление
         print("Winter")
     elif 3 <= month <= 5:
         print("Spring")
