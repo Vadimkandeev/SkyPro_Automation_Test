@@ -9,8 +9,6 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 driver.get('https://bonigarcia.dev/selenium-webdriver-java/data-types.html')
     
-lst = []
-
 
   
 driver.find_element(By.CSS_SELECTOR, "[name='first-name']").send_keys("Иван")
@@ -36,32 +34,48 @@ driver.find_element(By.CSS_SELECTOR, "[name='company']",).send_keys("SkyPro")
     
     # Жмякаем кнопку "применить"
 driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
-        
+
+# регистрируем цвета полей после нажатия кнопки     
 first_name = driver.find_element(By.CSS_SELECTOR, "#first-name").value_of_css_property("background-color")
-lst.append(first_name)
+
 last_name = driver.find_element(By.CSS_SELECTOR, "#last-name").value_of_css_property("background-color")
-lst.append(last_name) 
+
 address = driver.find_element(By.CSS_SELECTOR, "#address").value_of_css_property("background-color")
-lst.append(address)
+
 zip_code = driver.find_element(By.CSS_SELECTOR, "#zip-code").value_of_css_property("background-color")
-lst.append(zip_code)
+
 city = driver.find_element(By.CSS_SELECTOR, "#city").value_of_css_property("background-color")
-lst.append(city)
+
 country = driver.find_element(By.CSS_SELECTOR, "#country").value_of_css_property("background-color")
-lst.append(country)
+
 job_position = driver.find_element(By.CSS_SELECTOR, "#job-position").value_of_css_property("background-color")
-lst.append(job_position)
+
 email = driver.find_element(By.CSS_SELECTOR, "#e-mail").value_of_css_property("background-color")
-lst.append(email)
+
 phone = driver.find_element(By.CSS_SELECTOR, "#phone").value_of_css_property("background-color")
-lst.append(phone)
+
 company = driver.find_element(By.CSS_SELECTOR, "#company").value_of_css_property("background-color")
-lst.append(company)
 
 
+# Проверяем цвета полей с корректным вводом данных
+@pytest.mark.parametrize("field", [
+    first_name, 
+    last_name, 
+    address, 
+    city, 
+    country, 
+    job_position, 
+    email, 
+    phone, 
+    company
+    ])
+def test_fields(field):
+    assert field == "rgba(209, 231, 221, 1)"
+
+# Проверяем цвет поля с ошибкой ввода данных
 @pytest.mark.xfail()  
 def test_browser():
-    assert lst[3] == "rgba(209, 231, 221, 1)"
+    assert zip_code == "rgba(209, 231, 221, 1)"
     
 
 
