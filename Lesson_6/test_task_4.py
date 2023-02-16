@@ -57,6 +57,7 @@ phone = driver.find_element(By.CSS_SELECTOR, "#phone").value_of_css_property("ba
 company = driver.find_element(By.CSS_SELECTOR, "#company").value_of_css_property("background-color")
 
 
+
 # Проверяем цвета полей с корректным вводом данных
 @pytest.mark.parametrize("field", [
     first_name, 

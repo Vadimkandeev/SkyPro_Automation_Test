@@ -8,20 +8,6 @@ import pytest
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-# Создаем словарь, в который заносим локатор и строку, которую надо вписать в поле
-card = {
-    0: ["[name='first-name']", "Иван", "#first-name"],       
-    1: ["[name='last-name']", "Петров", "#last-name"],       
-    2: ["[name='address']", "Ленина, 55-3", "#address"],   
-    3: ["[name='zip-code']", "", "#zip-code"],             
-    4: ["[name='city']", "Москва", "#city"],           
-    5: ["[name='country']", "Россия", "#country"],         
-    6: ["[name='job-position']", "QA", "#job-position"],        
-    7: ["[name='company']", "SkyPro", "#company"],        
-    8: ["[name='e-mail']", "SkyPro@hotmail.ru", "#e-mail"],
-    9: ["[name='phone']", "89998887766", "#phone"]
-}
-
 
 # Заходим на сайт--------------
 driver.get('https://bonigarcia.dev/selenium-webdriver-java/data-types.html')
@@ -40,6 +26,19 @@ def sheck_fields(locator):
     color = driver.find_element(By.CSS_SELECTOR, locator).value_of_css_property("background-color")
     return color
 
+# Создаем словарь, в который заносим локатор и строку, которую надо вписать в поле
+card = {
+    0: ["[name='first-name']", "Иван", "#first-name"],       
+    1: ["[name='last-name']", "Петров", "#last-name"],       
+    2: ["[name='address']", "Ленина, 55-3", "#address"],   
+    3: ["[name='zip-code']", "", "#zip-code"],             
+    4: ["[name='city']", "Москва", "#city"],           
+    5: ["[name='country']", "Россия", "#country"],         
+    6: ["[name='job-position']", "QA", "#job-position"],        
+    7: ["[name='company']", "SkyPro", "#company"],        
+    8: ["[name='e-mail']", "SkyPro@hotmail.ru", "#e-mail"],
+    9: ["[name='phone']", "89998887766", "#phone"]
+}
 
 # в цикле вызываем функцию и заносим значения в поля   
 for i in range(len(card)):
