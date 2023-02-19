@@ -32,6 +32,7 @@ class MainPage:
     # Жмякаем кнопку "применить"
     def button_click(self, locator:str):
         self._driver.find_element(By.CSS_SELECTOR, locator).click()
+        
    
     # регистрируем цвета полей после нажатия кнопки
     def check_first_name(self):
