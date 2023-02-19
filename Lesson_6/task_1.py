@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 driver.implicitly_wait(20)
 
+
 driver.get("http://uitestingplayground.com/ajax")
 driver.find_element(By.CSS_SELECTOR, "[onclick='LoadLabel()']").click()
 
