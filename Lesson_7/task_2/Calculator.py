@@ -16,10 +16,10 @@ class Calculator:
         
     
     def key_pressed(self):
-        self._driver.find_element(By.XPATH, '//*[@id="calculator"]/div[2]/span[1]').click()
-        self._driver.find_element(By.XPATH, '//*[@id="calculator"]/div[2]/span[4]').click()
-        self._driver.find_element(By.XPATH, '//*[@id="calculator"]/div[2]/span[2]').click()
-        self._driver.find_element(By.XPATH, '//*[@id="calculator"]/div[2]/span[15]').click()
+        self._driver.find_element(By.CSS_SELECTOR, "#calculator > div.keys > span:nth-child(1)").click()
+        self._driver.find_element(By.CSS_SELECTOR, '#calculator > div.keys > span:nth-child(4)').click()
+        self._driver.find_element(By.CSS_SELECTOR, '#calculator > div.keys > span:nth-child(2)').click()
+        self._driver.find_element(By.CSS_SELECTOR, "#calculator > div.keys > span.btn.btn-outline-warning").click()
 
 
     def delay_after(self, time:str): 
@@ -27,5 +27,5 @@ class Calculator:
 
 
     def result(self):
-        res = self._driver.find_element(By.XPATH, '//*[@id="calculator"]/div[1]/div').text 
+        res = self._driver.find_element(By.CSS_SELECTOR, '#calculator > div.top > div').text 
         return res

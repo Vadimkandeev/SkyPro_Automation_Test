@@ -21,7 +21,7 @@ class MainPage:
         self._driver.find_element(By.CSS_SELECTOR, "#postal-code").send_keys("111333444")  
 
     def order_confirmation(self): # получение конечной цены заказа
-        txt = self._driver.find_element(By.XPATH, '//*[@id="checkout_summary_container"]/div/div[2]/div[7]').text
+        txt = self._driver.find_element(By.CSS_SELECTOR, ".summary_total_label").text  
         return txt
 
 

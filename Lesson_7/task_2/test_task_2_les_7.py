@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-from Main_Page import Calculator
+from Calculator import Calculator
 
 
 browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
