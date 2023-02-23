@@ -53,6 +53,8 @@ def get_cart_counter():
     txt = a.find_element(By.CSS_SELECTOR, "b").text
     return int(txt)
 
+
+
 def close_driver():
     browser.quit()
 
