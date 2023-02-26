@@ -7,11 +7,16 @@ driver = EmployeeClass('https://x-clients-be.onrender.com/employee')
 # Запрос всего списка сотрудников 
 # 
 # Позитивная проверка
+
 def test_positive_get_workers_list():
+    #  get list from API
     path = '?company='
     id = 251
-    resp_json = driver.employee_get(path, id)[0]
+    resp_api_json = driver.employee_get(path, id)[0]
     resp_status = driver.employee_get(path, id)[1]
+    
+    # compare values
+
     assert len(resp_json) > 0
     assert resp_status == 200
 
