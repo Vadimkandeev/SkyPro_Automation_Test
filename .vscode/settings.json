@@ -2,6 +2,13 @@
     "python.testing.pytestArgs": [
         "Lesson_9"
     ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./Lesson_10",
+        "-p",
+        "*test.py"
+    ]
 }

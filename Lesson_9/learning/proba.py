@@ -19,35 +19,3 @@ def func():
                         print(my_list[i], ",")
                 
 func()
-#---------------------------------------------
-request_text = "sselect * from employee e where id = :worker_id "
-
-
-def test_valid_check_note_new_worker():
-    path = '/'
-    new_id = 251
-    resp_id = driver.employee_get(path, new_id)[0]["id"]
-    resp_status = driver.employee_get(path, new_id)[1]
-    assert resp_id == new_id
-    assert resp_status == 200
-
-
-
-    new_worker = driver.employee_post(company_id, first_name, last_name, middle_name, phone, url)
-    new_worker_id = new_worker[0]['id'] # записываем новый id в переменную, чтобы создать запрос в БД
-    # Делаем запрос вновь созданной записи из БД  
-    new_db_resp = db.get_note_new_employee(company_id, new_worker_id, request_text)
-
-{
-    "id": 667,
-    "isActive": true,
-    "createDateTime": "2023-02-26T20:04:12.839Z",
-    "lastChangedDateTime": "2023-02-26T20:04:12.839Z",
-    "firstName": "Дарт",
-    "lastName": "Ситхович",
-    "middleName": "Вейдер",
-    "phone": "89155693658",
-    "email": null,
-    "avatar_url": "http://DeadStar_Tatuin",
-    "companyId": 277
-}
