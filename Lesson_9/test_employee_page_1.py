@@ -34,7 +34,6 @@ def test_invalid_get_workers_list():
     id = 190000
     resp_status = driver.employee_get(path, id)[1]
     assert resp_status == 200
-
 #-----------------------------------------------------------
 
 
