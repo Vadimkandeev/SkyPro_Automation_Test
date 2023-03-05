@@ -21,6 +21,7 @@ def test_capitalize(str, result):
     assert resp == result
 #-----------------------------------------------------------------
 
+
 # Принимает на вход текст и удаляет пробелы в начале, если они есть--------------
 @pytest.mark.parametrize("str, result", 
         [
