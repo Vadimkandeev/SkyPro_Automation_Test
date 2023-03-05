@@ -22,9 +22,19 @@ class EmployeeClass:
        status = requests.get(self.url+path+ str(id)).status_code
        body =  requests.get(self.url+path+ str(id)).json()
        return [body, status]
+    
     #-------------------------------------------------------------
-       
-
+    # CREATE COMPANY   
+    def create_company(self, name, description):
+        my_json = {
+            "name": name,
+            "description": description
+        }
+        my_headers={}
+        my_headers["x-client-token"] = self.get_token() 
+        resp = requests.post(url="https://x-clients-be.onrender.com/company", headers=my_headers, json=my_json)      
+        return resp.json()["id"]
+    #---------------------------------------------------------------
 
     # создание новой записи работника
     def employee_post(self, companyId, firstName, lastName, middleName, phone, url):

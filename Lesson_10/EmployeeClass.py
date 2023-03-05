@@ -1,8 +1,6 @@
 import requests
-import allure
 
-@allure.epic("Сотрудники")
-@allure.severity("blocker")
+
 class EmployeeClass:
 
     def __init__(self, url):
@@ -18,16 +16,25 @@ class EmployeeClass:
         return resp.json()["userToken"]
         
     
-    
     #  Any GET request
     def employee_get(self, path, id):  
 
        status = requests.get(self.url+path+ str(id)).status_code
        body =  requests.get(self.url+path+ str(id)).json()
        return [body, status]
+    
     #-------------------------------------------------------------
-       
-
+    # CREATE COMPANY   
+    def create_company(self, name, description):
+        my_json = {
+            "name": name,
+            "description": description
+        }
+        my_headers={}
+        my_headers["x-client-token"] = self.get_token() 
+        resp = requests.post(url="https://x-clients-be.onrender.com/company", headers=my_headers, json=my_json)      
+        return resp.json()["id"]
+    #---------------------------------------------------------------
 
     # создание новой записи работника
     def employee_post(self, companyId, firstName, lastName, middleName, phone, url):

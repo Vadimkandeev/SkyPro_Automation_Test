@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+from faker import Faker
+#from faker.providers import phone_number
 db_connection_string = "postgresql://x_clients_user:SZIgROntPcmlRYoaICpxIHbLwjMx43Pm@dpg-cfadlr1gp3jsh6etrpu0-a.frankfurt-postgres.render.com/xclients"
 
 
@@ -19,3 +21,10 @@ def func():
                         print(my_list[i], ",")
                 
 func()
+#phone = phone_number
+fake = Faker()
+print(fake.phone_number())
+print(fake.url())
+print(fake.email())
+print(fake.currency())
+print(fake.date_time())

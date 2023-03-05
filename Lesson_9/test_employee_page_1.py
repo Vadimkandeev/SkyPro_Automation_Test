@@ -1,19 +1,23 @@
-from EmployeeClass import EmployeeClass
 import pytest
+from EmployeeClass import EmployeeClass
 from Table_employee_class import Table_employee_class
+from faker import Faker
+
 
 driver = EmployeeClass('https://x-clients-be.onrender.com/employee')
 db = Table_employee_class("postgresql://x_clients_user:SZIgROntPcmlRYoaICpxIHbLwjMx43Pm@dpg-cfadlr1gp3jsh6etrpu0-a.frankfurt-postgres.render.com/xclients")
-                        
+fake = Faker()                       
 # Запрос всего списка сотрудников 
-# "select * from employee e where \"companyId\" =:company_id"
+# 
 # Позитивная проверка
 
 def test_positive_get_workers_list():
     #  Запрашиваем список сотрудников через API
     request_text = "select * from employee e where \"companyId\" =:curent_id"
     path = '?company='
-    id = 3
+    name = fake.name()
+    descr = fake.text(20)
+    id = driver.create_company(name, descr)
     resp_api_json = driver.employee_get(path, id)[0]
     resp_status = driver.employee_get(path, id)[1]
     # Запрашивем список сотрудников черед базу данных
@@ -38,13 +42,13 @@ def test_invalid_get_workers_list():
 # Позитивная проверка
 def test_valid_create_new_note():
     
-    company_id = 277
+    company_id = driver.create_company(fake.name(), fake.text(20))
     request_text = "select first_name, last_name, middle_name, phone, avatar_url, \"isActive\", id from employee e where id = :curent_id "
-    api_resp_first_name = "Dart"
-    api_resp_last_name = "Waider"
-    api_resp_middle_name = "Sith"
-    api_resp_phone = "87776665544"
-    api_resp_url = "www.StarWars.com"
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
     api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
     api_resp_new_worker_id = api_resp_new_worker[0]['id'] # записываем новый id в переменную, чтобы создать запрос в БД
     # Делаем запрос вновь созданной записи из БД  
@@ -62,29 +66,29 @@ def test_valid_create_new_note():
 #  Негативная проверка. Неформатный JSON 
 @pytest.mark.xfail()  
 def test_invalid_create_new_note():
-    company_id = 277
-    first_name = "Dart"
-    last_name = "Waider"
-    middle_name = "Sith"
-    phone = "87776665544"
-    url = "www.StarWars.com"
-    godzilla = "Godzilla"
-    count = 19955
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+    middle_name = fake.first_name()
+    phone = fake.phone_number()
+    url = fake.url()
+    godzilla = fake.text(10)
+    date = fake.date_time()
     
-    nem_worker = driver.employee_post(company_id, first_name, last_name, middle_name, phone, url, godzilla, count)
+    nem_worker = driver.employee_post(company_id, first_name, last_name, middle_name, phone, url, godzilla, date)
     assert nem_worker[1]== 201   
 
 #  Негативная проверка. Несуществующий ID
 @pytest.mark.xfail()  
 def test_invalid_create_new_note_2():
-    company_id = 199885
 
-    first_name = "Dart"
-    last_name = "Waider"
-    middle_name = "Sith"
-    phone = "87776665544"
-    url = "www.StarWars.com"
-
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+    middle_name = fake.first_name()
+    phone = fake.phone_number()
+    url = fake.url()
+    
     nem_worker = driver.employee_post(company_id, first_name, last_name, middle_name, phone, url)
     assert nem_worker[1]== 201
     
@@ -94,8 +98,17 @@ def test_invalid_create_new_note_2():
 #
 # Позитивная проверка  
 def test_valid_check_note_new_worker():
+    # Перед отправкой запроса записи о новом сотруднике, создаем запись
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
+    api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
+    curent_id =  api_resp_new_worker[0]['id']
+    #-------------
     path = '/'
-    curent_id = 251
     request_text = "select * from employee e where id = :curent_id "
     resp_status = driver.employee_get(path, curent_id)[1]
     api_resp_id = driver.employee_get(path, curent_id)[0]["id"]
@@ -127,8 +140,17 @@ def test_valid_check_note_new_worker():
 # Негативная проверка. Несоответствующий статус.
 @pytest.mark.xfail() 
 def test_invalid_check_note_new_worker():
+    # Перед отправкой запроса записи о новом сотруднике, создаем запись
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
+    api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
+    new_id =  api_resp_new_worker[0]['id']
+
     path = '/'
-    new_id = 251
     api_resp_id = driver.employee_get(path, new_id)[0]["id"]
     api_resp_status = driver.employee_get(path, new_id)[1]
     assert api_resp_id == new_id
@@ -137,6 +159,7 @@ def test_invalid_check_note_new_worker():
 # Негативная проверка. Запрос по несуществующему ID
 @pytest.mark.xfail() 
 def test_invalid_check_note_new_worker_2():
+    
     path = '/'
     new_id = 9887
     resp_status = driver.employee_get(path, new_id)[1]
@@ -148,10 +171,19 @@ def test_invalid_check_note_new_worker_2():
 #
 # Позитивная проверка
 def test_valid_change_worker_note():
-    curent_id = 258
-    lastName = "Скайуокер"
-    email= "Jabba_hat@tatuin.ru"
-    url = "https://Pandora.com"
+    # Перед редактированием записи о новом сотруднике, создаем запись
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
+    api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
+    curent_id =  api_resp_new_worker[0]['id']
+
+    lastName = fake.first_name()
+    email= fake.email()
+    url = fake.url()
     isActive = True
     request_text = "select * from employee e where id = :curent_id "
     resp = driver. employee_patch(curent_id, lastName, email, url, isActive)
@@ -173,13 +205,22 @@ def test_valid_change_worker_note():
 # Негативная проверка. Неформатный JSON
 @pytest.mark.xfail() 
 def test_invalid_change_worker_note():
-    new_id = 258
-    lastName = "Скайуокер"
-    email= "Jabba_hat@tatuin.ru"
-    url = "https://Pandora.com"
+    # Перед редактированием записи о новом сотруднике, создаем запись
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
+    api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
+    new_id =  api_resp_new_worker[0]['id']
+    
+    lastName = fake.last_name()
+    email= fake.email()
+    url = fake.url()
     isActive = True
-    title = "Alien vs Predator"
-    data = 1995
+    title = fake.text(20)
+    data = fake.date_time()
 
     resp = driver. employee_patch(new_id, lastName, email, url, isActive, title, data)
     resp_status = resp[1]
@@ -188,11 +229,20 @@ def test_invalid_change_worker_note():
 # Негативная проверка. Недопустимое значение для ключа "isActive"
 @pytest.mark.xfail() 
 def test_invalid_change_worker_note_2():
-    new_id = 258
-    lastName = "Скайуокер"
-    email= "Jabba_hat@tatuin.ru"
-    url = "https://Pandora.com"
-    isActive = "Thank you very much"
+    # Перед редактированием записи о новом сотруднике, создаем запись
+    company_id = driver.create_company(fake.name(), fake.text(20))
+    api_resp_first_name = fake.first_name()
+    api_resp_last_name = fake.last_name()
+    api_resp_middle_name = fake.first_name()
+    api_resp_phone = fake.phone_number()
+    api_resp_url = fake.url()
+    api_resp_new_worker = driver.employee_post(company_id, api_resp_first_name, api_resp_last_name, api_resp_middle_name, api_resp_phone, api_resp_url)
+    new_id =  api_resp_new_worker[0]['id']
+    
+    lastName = fake.last_name()
+    email= fake.email()
+    url = fake.url()
+    isActive = 3222154
 
     resp = driver. employee_patch(new_id, lastName, email, url, isActive)
     resp_status = resp[1]
@@ -211,11 +261,13 @@ def test_invalid_change_worker_note_2():
 # Негативная проверка. Несуществующий ID работника
 @pytest.mark.xfail() 
 def test_invalid_change_worker_note_3():
-    new_id = 996633
-    lastName = "Скайуокер"
-    email= "Jabba_hat@tatuin.ru"
-    url = "https://Pandora.com"
+    lastName = fake.last_name()
+    email= fake.email()
+    url = fake.url()
     isActive = True
+    
+    new_id = 99663300124516554
+    
 
     resp = driver. employee_patch(new_id, lastName, email, url, isActive)
     resp_status = resp[1]
