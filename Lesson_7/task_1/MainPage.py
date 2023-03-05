@@ -7,7 +7,6 @@ class MainPage:
         self._driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
         
     
-     
     
     # Создаем функцию, которая будет отвечать  за запись строк в поля
     def test_input_symbols_in_string(self,):
