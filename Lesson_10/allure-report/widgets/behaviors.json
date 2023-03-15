@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"94d2902cedb35dfa91803ccd06ef222d","name":"Позитивная проверка","statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4}},{"uid":"123616ff85114c22cf132925026e73ac","name":"Негативная проверка","statistic":{"failed":0,"broken":0,"skipped":6,"passed":2,"unknown":0,"total":8}}]}

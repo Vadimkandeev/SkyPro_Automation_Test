@@ -4,8 +4,7 @@ class MainPage:
     def __init__(self, driver):
         self._drver = driver
         self._drver.get("https://www.labirint.ru/")
-        self._drver.implicitly_wait(4)
-        self._drver.maximize_window()
+      
         
 
         
