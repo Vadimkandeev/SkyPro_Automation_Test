@@ -17,7 +17,7 @@ def test_positive_get_workers_list():
     
     # compare values
 
-    assert len(resp_json) > 0
+    assert len(resp_api_json) > 0
     assert resp_status == 200
 
 # Негативная проверка (несуществующий ID)
